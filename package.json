@@ -1,0 +1,15 @@
+{
+  "name": "digiWizard",
+  "version": "0.0.1",
+  "description": "React Native Wizard Component",
+  "main": "index.js",
+  "author": "Matthew Wood",
+  "license": "MIT",
+  "devDependencies": {
+    "metro-react-native-babel-preset": "^0.66.0",
+    "prettier": "^2.3.1"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2"
+  }
+}

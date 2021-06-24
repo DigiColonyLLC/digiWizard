@@ -16,7 +16,7 @@ import {
   View,
   Button,
 } from 'react-native';
-import {Wizard, Step} from 'digiWizard';
+import {Wizard, Step, Breadcrumb} from 'digiWizard';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
@@ -60,12 +60,11 @@ const App = () => {
       <View
         style={{
           backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          flexGrow: 1,
         }}>
         <Wizard
           ref={wizard}
           style={styles.wizardContainer}
-          hideTitles={false}
-          quickNav={true}
           isFirstStep={val => setIsFirst(val)}
           isLastStep={val => setIsLast(val)}
           currentStep={(step, title, total) => {
@@ -73,10 +72,14 @@ const App = () => {
               setStepTitle(`${step + 1}. ${title}`);
             }
           }}
-          onColor={'#FFF'}
-          offColor={'#000'}
           transition={transition}>
-          <Step title="One">
+          <Breadcrumb
+            orientation={'vertical'}
+            quickNav={true}
+            onColor={'#4719ff'}
+            offColor={'#ececec'}
+          />
+          <Step style={styles.step} title="One">
             <Text>One</Text>
           </Step>
           <Step title="Two">
@@ -106,8 +109,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
+  step: {
+    flexGrow: 1,
+  },
   wizardContainer: {
     padding: 16,
+    flexDirection: 'row',
+    flexGrow: 1,
   },
 });
 

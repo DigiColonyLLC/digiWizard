@@ -17,9 +17,10 @@ import {Wizard, Step} from 'digiWizard';
 ## Basic Usage
 
 ```
-import {Wizard, Step} from 'digiWizard';
+import {Wizard, Step, Breadcrumb} from 'digiWizard';
 
 <Wizard>
+  <Breadcrumb />
   <Step title="Start">
     <Text>Each step can contain any content you wish to render.</Text>
   </Step>
@@ -52,18 +53,23 @@ See the example app to understand how to implement more advanced features.
 | `currentStep` | func | optional | Callback containing the index and title of the current step as well as number of total steps|
 | `isFirstStep` | func | optional | Callback containing boolean value is current step is first step |
 | `isLastStep` | func | optional | Callback containing boolean value if current step is last step |
-| `quickNav` | bool | true | Allow navigation to step by tapping on breadcrumb |
-| `hideTitles` | bool | false | Show/Hide step title under breadcrumb|
-| `onColor` | string | `#FFFFFF`| Color of breadcrumb when selected |
-| `offColor` | string | `#000000` | Color of breadcrumbs when not selected |
 | `transition` | string | `fade` | Type of transition between steps |
 | `duration` | number | 300 | Time for transition to complete |
 
 #### Step
 | Prop | Type | Default  | Description |
 |-----|-----------|----------------|-------------|
-| `title` | string | optional | Title of the step, used by breadcrumbs |
+| `title` | string | optional | Title of the step, returned by currentStep |
 
+#### Breadcrumb
+| Prop | Type | Default  | Description |
+|-----|-----------|----------------|-------------|
+| `orientation` | string | horizontal | Set the orientation of the breadcrumb bar, horizontal or vertical |
+| `quickNav` | bool | true | Allow navigation to step by tapping on breadcrumb |
+| `onColor` | string | `#FFFFFF`| Color of breadcrumb when selected |
+| `offColor` | string | `#000000` | Color of breadcrumbs when not selected |
+
+The position of the breadcrumb component will determine it's rendering position.  Make it the first child under Wizard to render it before the step or make it the last child under Wizard to render it after the step.  Combined with the `orientation` prop you can position and scale the breadcrumb bar on any side of the Wizard's steps.
 
 ## Reference Functions
 

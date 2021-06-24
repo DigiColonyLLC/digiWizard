@@ -1,77 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Animated, Easing, View, Text, Dimensions, TouchableOpacity, StyleSheet } from 'react-native'
+import { Animated, View, Dimensions } from 'react-native'
 import PropTypes from 'prop-types'
 import Step from './Step'
-
-const adaptiveStyles = (onColor, offColor) => StyleSheet.create({
-  circle: {
-    borderWidth: 1,
-    borderColor: offColor,
-    borderRadius: 50,
-    width: 30,
-    height: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10,
-    zIndex: 50,
-  },
-  circleTitle: {
-    fontSize: 12,
-    zIndex: 100,
-  },
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    zIndex: 25,
-  },
-  lineDivider: {
-    flexGrow:1,
-    borderBottomWidth: 2,
-    borderBottomColor: offColor,
-    marginBottom: 18, // Magic Number?
-  },
-  stepContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 0,
-  },
-  titleCircle: {
-    marginTop: 5,
-    fontSize: 12,
-    paddingBottom: 10,
-    alignSelf: 'center',
-    zIndex: 50,
-  },
-})
+import Breadcrumb from './Breadcrumb'
 
 const { width, height } = Dimensions.get('window')
 
-const ConditionalWrapper = ({ condition, wrapper, children }) => condition ? wrapper(children) : children
-
-const Circle = ({ index, selectedIndex, onColor, offColor }) => {
-  const styles = adaptiveStyles(onColor, offColor)
-  return (
-    <View
-      style={
-        index === selectedIndex
-          ? { ...styles['circle'], backgroundColor: onColor } // Should I Make Two Styles?
-          : { ...styles['circle'], backgroundColor:  offColor }
-      }>
-      <Text style={{...styles['circleTitle'], color : index === selectedIndex ? offColor : onColor}}>
-        {index + 1}
-      </Text>
-    </View>
-  )
-}
-
 const Wizard = React.forwardRef(
-  ({ style, hideTitles, quickNav, currentStep, isFirstStep, isLastStep, onColor, offColor, transition, duration, children }, ref) => {
+  ({ style, currentStep, isFirstStep, isLastStep, transition, duration, children }, ref) => {
     const [activeStep, setActiveStep] = useState(0)
     const [animationValue, setAnimationValue] = useState(undefined)
     const steps = children.filter(child => child.type === Step)
     if (steps.length === 0) return
+    const breadcrumbs = children.find(child => child.type === Breadcrumb)
+    const breadcrumbIndex = children.findIndex(child => child.type === Breadcrumb)
   
     if (ref) {
       ref.current = {
@@ -156,58 +98,37 @@ const Wizard = React.forwardRef(
       setAnimationValue({ opacity: opacity })
     }
 
-    const styles = adaptiveStyles(onColor, offColor)
+    const key="breadcrumbView"
+    const components = []
+    if(breadcrumbs) components.push(React.cloneElement(breadcrumbs, {key, changeStep, activeStep, steps}, null))
+    if(steps.length > activeStep) {
+      components.push(
+        <Animated.View key="stepView" style={{...animationValue, ...steps[activeStep].props.style}}>
+          {steps[activeStep]}
+        </Animated.View> 
+      )
+    }
+
+    if(breadcrumbIndex > steps.length-1) components.reverse()
 
     return (
       <View style={style}>
-        <View style={styles.container}>
-          {steps.map((step, index) => {
-            const { title } = step.props
-            return (
-              <React.Fragment key={`step-${index}`}>
-                <View
-                  style={{ ...styles.stepContainer }}>
-                  <ConditionalWrapper 
-                    condition={quickNav}
-                    wrapper={children => <TouchableOpacity onPress={() => changeStep(index)}>{children}</TouchableOpacity>}
-                  >
-                    <Circle selectedIndex={activeStep} index={index} offColor={offColor} onColor={onColor} />  
-                    <Text numberOfLines={1} ellipsizeMode="tail" style={styles.titleCircle}>
-                      {!hideTitles && title ? title : ' '}
-                    </Text>
-                  </ConditionalWrapper>
-                </View>
-                {index !== steps.length-1 && <View style={styles.lineDivider}></View>}
-              </React.Fragment>
-            )
-          })}
-        </View>
-        <Animated.View style={animationValue}>
-          {steps.length > activeStep ? steps[activeStep] : null}
-        </Animated.View>
+        {components}
       </View>
     )
   },
 )
 
 Wizard.defaultProps = {
-  hideTitles: false,
-  quickNav: true,
-  onColor: '#FFF',
-  offColor: '#000',
   transition: 'none',
   duration: 300,
 }
 
 Wizard.propTypes = {
   style: PropTypes.object,
-  hideTitles: PropTypes.bool,
-  quickNav: PropTypes.bool,
   currentStep: PropTypes.func,
   isFirstStep: PropTypes.func,
   isLastStep: PropTypes.func,
-  onColor: PropTypes.string,
-  offColor: PropTypes.string,
   transition: PropTypes.oneOf(['none','slideLeft','slideRight','slideUp','SlideDown']),
   duration: PropTypes.number,
 }

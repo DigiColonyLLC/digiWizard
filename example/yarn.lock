@@ -2272,7 +2272,7 @@ diff-sequences@^26.6.2:
 
 digiWizard@../digiWizard-v0.0.1.tgz:
   version "0.0.1"
-  resolved "../digiWizard-v0.0.1.tgz#83b4f31f97c86f99afc7bc5c2e760b1cff51723c"
+  resolved "../digiWizard-v0.0.1.tgz#d2fe9acd03a6751fc0bfa4a072589e2b73b93eda"
   dependencies:
     prop-types "^15.7.2"
 

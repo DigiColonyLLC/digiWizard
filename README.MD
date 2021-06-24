@@ -1,23 +1,23 @@
-# DigiWizard React Native Component
+# Digi-RN-Wizard
 
-Create multi-step wizards to guide users through setup or other complex task in a simple manner.  
+Create multi-step wizards in React Native applications to guide users through setup or other complex tasks in a simple manner.  
 
 ## Installation
 
 1. Install:
-    - Using [npm](https://www.npmjs.com/#getting-started): `npm install digiWizard --save`
-    - Using [Yarn](https://yarnpkg.com/): `yarn add digiWizard`
+    - Using [npm](https://www.npmjs.com/#getting-started): `npm install digi-rn-wizard --save`
+    - Using [Yarn](https://yarnpkg.com/): `yarn add digi-rn-wizard`
 
 2. Import it in your JS:
 
 ```js
-import {Wizard, Step} from 'digiWizard';
+import {Wizard, Step} from 'digi-rn-wizard';
 ```
 
 ## Basic Usage
 
 ```
-import {Wizard, Step, Breadcrumb} from 'digiWizard';
+import {Wizard, Step, Breadcrumb} from 'digi-rn-wizard';
 
 <Wizard>
   <Breadcrumb />

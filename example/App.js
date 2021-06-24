@@ -16,7 +16,7 @@ import {
   View,
   Button,
 } from 'react-native';
-import {Wizard, Step, Breadcrumb} from 'digiWizard';
+import {Wizard, Step, Breadcrumb} from 'digi-rn-wizard';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
@@ -74,7 +74,7 @@ const App = () => {
           }}
           transition={transition}>
           <Breadcrumb
-            orientation={'vertical'}
+            style={{paddingBottom: 8}}
             quickNav={true}
             onColor={'#4719ff'}
             offColor={'#ececec'}
@@ -114,8 +114,7 @@ const styles = StyleSheet.create({
   },
   wizardContainer: {
     padding: 16,
-    flexDirection: 'row',
-    flexGrow: 1,
+    flexDirection: 'column',
   },
 });
 

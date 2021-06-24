@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "digiWizard": "../digiWizard-v0.0.1.tgz",
+    "digi-rn-wizard": "../digi-rn-wizard-v0.0.1.tgz",
     "react": "17.0.1",
     "react-native": "0.64.2"
   },

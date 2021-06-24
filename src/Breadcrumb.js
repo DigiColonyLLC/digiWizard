@@ -59,10 +59,10 @@ const Circle = ({ index, selectedIndex, onColor, offColor }) => {
   )
 }
 
-const Breadcrumb = ({ quickNav, onColor, offColor, orientation, steps, changeStep, activeStep }) => {
+const Breadcrumb = ({ style, quickNav, onColor, offColor, orientation, steps, changeStep, activeStep }) => {
     const styles = adaptiveStyles(onColor, offColor, orientation)
   return (
-  <View style={styles.container}>
+  <View style={{...styles.container, ...style}}>
     {steps.map((step, index) => {
         const { title } = step.props
     return (
@@ -88,6 +88,7 @@ Breadcrumb.defaultProps = {
 }
 
 Breadcrumb.propTypes = {
+  style: PropTypes.object,
   orientation: PropTypes.oneOf(['horizontal', 'vertical']),
   quickNav: PropTypes.bool,
   onColor: PropTypes.string,
